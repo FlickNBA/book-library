@@ -23,7 +23,7 @@ header {
     width: 100%;
     position: absolute;
     top: 0;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -112,4 +112,17 @@ h3 {
     border-radius: 0.5rem;
     border: 0;
     cursor: pointer;
+}
+
+.removeBook {
+    background: #eef2f3;
+    color: #2C5364;
+    font-weight: 500;
+    font-size: 1.25rem;
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #2C5364;
+    cursor: pointer;
+    margin-top: -4rem;
+    margin-bottom: 1rem;
 }

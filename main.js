@@ -12,6 +12,26 @@ function Book(title, author, read, pages) {
     }
 }
 
+function removeBook(book) {
+    // let bookToRemove = myLibrary.find(book => book.title == book.title);
+    // console.log(bookToRemove);
+
+    let bookToRemove = (libraryBook) => libraryBook.title == book.title;
+
+    let bookIndex = myLibrary.findIndex(bookToRemove);
+
+    let bookDiv = document.querySelector(`[data-book="${book.title}, ${book.read}"]`);
+    
+    bookDiv.remove();
+
+    myLibrary.splice(bookIndex, 1);
+
+    // delete myLibrary[bookIndex];
+
+    // myLibrary.filter(x => x);
+
+}
+
 // function Book(title, author, pages, read) {
 //     this.title = title;
 //     this.author = author;
@@ -29,10 +49,23 @@ function addBookToLibrary(book) {
     myLibrary.push(book);
     let newBook = document.createElement("div");
     let newBookBg = document.createElement("bg");
+    newBook.setAttribute("data-book", `${book.title}, ${book.read}`);
     newBook.classList.add("book");
     newBookBg.classList.add("bg");
     newBookBg.style["background-image"] = `url(${book.cover})`;
     newBook.appendChild(newBookBg);
+
+    let removeButton = document.createElement("button");
+
+    removeButton.classList.add("removeBook");
+
+    removeButton.textContent = "Remove book";
+
+    removeButton.addEventListener("click", () => {
+        removeBook(book);
+    })
+
+    newBook.appendChild(removeButton);
 
     let H1 = document.createElement("h1");
     H1.textContent = book.title;
@@ -57,21 +90,28 @@ function addBookToLibrary(book) {
     let notRead = document.createElement("div");
     notRead.classList.add("notRead");
 
-    if (book.read == true) {
+    if (book.read === true) {
         readPages = book.pages;
         readText = "100% read";
         readPercentage = 100;
         read.style["border-bottom-right-radius"] = "0.5rem";
-    } else if (book.read == false) {
+    } else if (book.read === false) {
         readPages = 0;
         readText = "";
         notReadText = "not read";
         notRead.style["border-bottom-left-radius"] = "0.5rem";
         readPercentage = 0;
     } else {
-        readPages = book.read;
-        readPercentage = Math.round((book.read / book.pages) * 100);
-        readText = readPercentage > 25 ? `${readPercentage}% read` : `${readPercentage}%`;
+        if (book.read > book.pages) {
+            readPages = book.pages;
+            readText = "100% read";
+            readPercentage = 100;
+            read.style["border-bottom-right-radius"] = "0.5rem";
+        } else {
+            readPages = book.read;
+            readPercentage = Math.round((book.read / book.pages) * 100);
+            readText = readPercentage > 25 ? `${readPercentage}% read` : `${readPercentage}%`;
+        }
     }
 
     read.textContent = readText;
@@ -117,15 +157,7 @@ addBookButton.addEventListener("click", () => {
     let bookAuthor = prompt("Who wrote the book?");
     let bookRead = prompt("Did you read the book? (Type yes, no, or how much pages did you read");
     bookRead = bookRead == "yes" ? true :
-        bookRead == "no" ? false : bookRead;
+        bookRead == "no" ? false : Number(bookRead);
     
-    let newBook = new Book(bookTitle, bookAuthor, bookRead).getMore();
-})
-
-// let icePrincess = new Book("The Ice Princess", "Camilla Lackberg", true).getMore();
-
-// let atomicHabits = new Book("Atomic Habits", "James Clear", false).getMore();
-
-// // let theHobbit = new Book("The Hobbit", "J.R.R. Tolkien").getMore();
-
-// let princeCaspian = new Book("Prince Caspian", "C.S. Lewis", 150).getMore();
+    new Book(bookTitle, bookAuthor, bookRead).getMore();
+});
