@@ -13,35 +13,12 @@ function Book(title, author, read, pages) {
 }
 
 function removeBook(book) {
-    // let bookToRemove = myLibrary.find(book => book.title == book.title);
-    // console.log(bookToRemove);
-
     let bookToRemove = (libraryBook) => libraryBook.title == book.title;
-
     let bookIndex = myLibrary.findIndex(bookToRemove);
-
     let bookDiv = document.querySelector(`[data-book="${book.title}, ${book.read}"]`);
-    
     bookDiv.remove();
-
     myLibrary.splice(bookIndex, 1);
-
-    // delete myLibrary[bookIndex];
-
-    // myLibrary.filter(x => x);
-
 }
-
-// function Book(title, author, pages, read) {
-//     this.title = title;
-//     this.author = author;
-//     this.pages = pages;
-//     this.read = read;
-//     this.info = () => {
-//         let readString = read ? "read" : "not read";
-//         return `${title} by ${author}, ${pages} pages, ${readString}`;
-//     }
-// }
 
 const mainContainer = document.querySelector("main");
 
@@ -54,42 +31,28 @@ function addBookToLibrary(book) {
     newBookBg.classList.add("bg");
     newBookBg.style["background-image"] = `url(${book.cover})`;
     newBook.appendChild(newBookBg);
-
     let removeButton = document.createElement("button");
-
     removeButton.classList.add("removeBook");
-
     removeButton.textContent = "Remove book";
-
     removeButton.addEventListener("click", () => {
         removeBook(book);
     })
-
     newBook.appendChild(removeButton);
-
     let H1 = document.createElement("h1");
     H1.textContent = book.title;
-
     newBook.appendChild(H1);
-
     let H2 = document.createElement("h2");
     H2.textContent = `by ${book.author} in ${book.published}`;
-
     newBook.appendChild(H2);
-
     let H3 = document.createElement("h3");
-
     let readPages;
     let readText;
     let notReadText = "";
     let readPercentage;
-
     let read = document.createElement("div");
     read.classList.add("read");
-
     let notRead = document.createElement("div");
     notRead.classList.add("notRead");
-
     if (book.read === true) {
         readPages = book.pages;
         readText = "100% read";
@@ -113,25 +76,15 @@ function addBookToLibrary(book) {
             readText = readPercentage > 25 ? `${readPercentage}% read` : `${readPercentage}%`;
         }
     }
-
     read.textContent = readText;
-
     H3.textContent = `read ${readPages} of ${book.pages} pages`;
-
     newBook.appendChild(H3);
-
     console.log(readPercentage);
-
     read.style["width"] = `${readPercentage}%`;
-
     notRead.style["width"] = `${100 - readPercentage}%`;
-
     notRead.textContent = notReadText;
-
     newBook.appendChild(read);
-
     newBook.appendChild(notRead);
-
     mainContainer.appendChild(newBook);
 }
 
@@ -158,6 +111,5 @@ addBookButton.addEventListener("click", () => {
     let bookRead = prompt("Did you read the book? (Type yes, no, or how much pages did you read");
     bookRead = bookRead == "yes" ? true :
         bookRead == "no" ? false : Number(bookRead);
-    
     new Book(bookTitle, bookAuthor, bookRead).getMore();
 });
